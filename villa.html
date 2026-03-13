@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villa</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="image-container">
+            <img src="images/2.jpeg" alt="Map" id="image" style="width: 100vw; object-fit: cover;">
+        </div>
+
+        <div class="svg-container">
+            <svg id="svg-container" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480">
+            </svg>
+        </div>
+    </div>
+    <script>
+        const polygonsData = [
+            {
+                coordinates: [
+
+                    { x: 229, y: 87 },
+                    { x: 396, y: 89 },
+                    { x: 396.5, y: 94 },
+                    { x: 409, y: 94 },
+                    { x: 409, y: 105 },
+                    { x: 399, y: 122 },
+                    { x: 399, y: 176 },
+                    { x: 336, y: 176 },
+                    { x: 336, y: 182 },
+                    { x: 216, y: 182 },
+                    { x: 216, y: 92 },
+                    { x: 228.5, y: 92 },
+                ],
+                fill: "rgba(0,213,255,0.3)",
+                stroke: "white",
+            }, {
+                coordinates: [
+
+
+                    { x: 399, y: 176 },
+                    { x: 399, y: 176 },
+                    { x: 399, y: 186 },
+                    { x: 405, y: 186 },
+                    { x: 406, y: 211 },
+                    { x: 408, y: 211.3 },
+                    { x: 408, y: 213 },
+                    { x: 405, y: 213 },
+                    { x: 405, y: 233 },
+                    { x: 408, y: 233 },
+                    { x: 408, y: 245 },
+                    { x: 216, y: 245 },
+                    { x: 216, y: 182 },
+                    { x: 336, y: 182 },
+                    { x: 336, y: 176 },
+
+                ],
+                fill: "rgba(0,213,255,0.3)",
+                stroke: "white",
+            }, {
+                coordinates: [
+
+
+                    { x: 408, y: 245 },
+                    { x: 400, y: 247 },
+                    { x: 400, y: 299 },
+                    { x: 395, y: 299 },
+                    { x: 392, y: 299 },
+                    { x: 357, y: 299 },
+                    { x: 314, y: 299 },
+                    { x: 216, y: 299 },
+                    { x: 216, y: 245 },
+
+                ],
+                fill: "rgba(0,213,255,0.3)",
+                stroke: "white",
+            },
+
+
+
+        ];
+
+        const svgContainer = document.getElementById('svg-container');
+
+    </script>
+    <script src="/main.js"></script>
+
+</body>
+
+</html>
