@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polygon Drawer</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .coords-box {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: black;
+            color: white;
+            padding: 6px 10px;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+        }
+
+        .controls input {
+            width: 350px;
+            padding: 5px;
+        }
+
+        .controls button {
+            padding: 6px 10px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Image -->
+        <div class="image-container">
+            <img src="images/1.jpeg" alt="Map" width="100%">
+        </div>
+
+        <!-- SVG -->
+        <div class="svg-container">
+            <svg id="svg-container" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"></svg>
+        </div>
+
+    </div>
+
+    <!-- Hover Coordinates -->
+    <div class="coords-box">
+        X: <span id="xVal">0</span> ,
+        Y: <span id="yVal">0</span>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <input type="text" id="pointsInput" placeholder="Polygon points will appear here">
+        <button onclick="clearPoints()">Clear</button>
+    </div>
+
+    <script>
+        const svgContainer = document.getElementById('svg-container');
+        const xVal = document.getElementById('xVal');
+        const yVal = document.getElementById('yVal');
+        const pointsInput = document.getElementById('pointsInput');
+
+        let points = [];
+
+        function getCoordinates(evt) {
+            const pt = svgContainer.createSVGPoint();
+            pt.x = evt.clientX;
+            pt.y = evt.clientY;
+
+            const svgP = pt.matrixTransform(svgContainer.getScreenCTM().inverse());
+
+            return {
+                x: parseFloat(svgP.x.toFixed(2)),
+                y: parseFloat(svgP.y.toFixed(2))
+            };
+        }
+
+        // 👉 Hover: show coordinates
+        svgContainer.addEventListener('mousemove', function (e) {
+            const pos = getCoordinates(e);
+            xVal.textContent = pos.x;
+            yVal.textContent = pos.y;
+        });
+
+        // 👉 Click: add point
+        svgContainer.addEventListener('click', function (e) {
+            const pos = getCoordinates(e);
+            points.push(pos);
+
+            drawPolygon();
+            updateInput();
+        });
+
+        function updateInput() {
+            pointsInput.value = JSON.stringify(
+                points.map(p => ({
+                    x: parseFloat(p.x.toFixed(2)),
+                    y: parseFloat(p.y.toFixed(2))
+                }))
+            );
+        }
+
+        function clearPoints() {
+            points = [];
+            svgContainer.innerHTML = '';
+            pointsInput.value = '';
+        }
+
+        function drawPolygon() {
+            svgContainer.innerHTML = '';
+
+            // Draw points
+            points.forEach(p => {
+                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute("cx", p.x);
+                circle.setAttribute("cy", p.y);
+                circle.setAttribute("r", 0.3);
+                circle.setAttribute("fill", "rgba(0,213,255,0.3)");
+                svgContainer.appendChild(circle);
+            });
+
+            // Draw polygon
+            if (points.length > 1) {
+                const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+
+                polygon.setAttribute(
+                    "points",
+                    points.map(p => `${p.x},${p.y}`).join(' ')
+                );
+
+                polygon.setAttribute("fill", "rgba(0,213,255,0.3)");
+                polygon.setAttribute("stroke", "white");
+                polygon.setAttribute("stroke-width", "0.2   ");
+
+                svgContainer.appendChild(polygon);
+            }
+        }
+
+
+    </script>
+
+</body>
+
+</html>
