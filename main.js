@@ -34,7 +34,7 @@ function drawPolygons() {
 drawPolygons();
 
 function checkOrientation() {
-  const isMobile = window.innerWidth <= 768;
+  const isMobile = window.innerWidth <= 600;
   const isPortrait = window.innerHeight > window.innerWidth;
 
   const alertBox = document.getElementById("landscapeAlert");
